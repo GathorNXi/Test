@@ -1,0 +1,16 @@
+{
+  "name": "cookie-partner-counter",
+  "version": "1.0.0",
+  "description": "Tool to count cookie partners on websites",
+  "main": "cookie-counter.js",
+  "scripts": {
+    "count": "node cookie-counter.js"
+  },
+  "keywords": ["cookies", "privacy", "gdpr", "consent"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12"
+  }
+}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmarklet - Compteur de Partenaires Cookies</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .bookmarklet {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .bookmarklet-link {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .bookmarklet-link:hover {
+            background: #0056b3;
+        }
+        .code {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+        .instructions {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .result-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Compteur de Partenaires Cookies</h1>
+
+    <p>Ce bookmarklet vous permet de compter automatiquement le nombre de partenaires listés dans les bandeaux de consentement aux cookies.</p>
+
+    <div class="instructions">
+        <h2>📖 Instructions d'installation</h2>
+        <ol>
+            <li><strong>Faites glisser</strong> le bouton ci-dessous vers votre barre de favoris</li>
+            <li><strong>Ou faites un clic droit</strong> et sélectionnez "Ajouter aux favoris"</li>
+            <li>Rendez-vous sur un site web avec un bandeau de cookies</li>
+            <li>Cliquez sur le bookmarklet dans vos favoris</li>
+        </ol>
+    </div>
+
+    <div class="bookmarklet">
+        <h2>📌 Bookmarklet</h2>
+        <p>Glissez ce lien dans votre barre de favoris :</p>
+        <a href="javascript:(function()%7Bfunction%20countCookiePartners()%7Blet%20results%3D%5B%5D%3Bif(window.Didomi)%7Btry%7Bconst%20vendors%3Dwindow.Didomi.getUserConsentStatusForAll()%3F.vendors%7C%7C%7B%7D%3Bconst%20count%3DObject.keys(vendors).length%3Bresults.push(%60%F0%9F%93%8C%20Didomi%20d%C3%A9tect%C3%A9%3A%20%24%7Bcount%7D%20partenaires%60)%3B%7Dcatch(e)%7Bresults.push('Erreur%20Didomi%3A%20'%2Be.message)%3B%7D%7Dif(window.OneTrust)%7Btry%7Bconst%20vendors%3Dwindow.OneTrust.GetDomainData()%3F.VendorsSummary%7C%7C%5B%5D%3Bresults.push(%60%F0%9F%93%8C%20OneTrust%20d%C3%A9tect%C3%A9%3A%20%24%7Bvendors.length%7D%20partenaires%60)%3B%7Dcatch(e)%7Bresults.push('Erreur%20OneTrust%3A%20'%2Be.message)%3B%7D%7Dif(typeof%20__tcfapi%3D%3D%3D'function')%7B__tcfapi('getVendorList'%2C2%2C(vendorList%2Csuccess)%3D%3E%7Bif(success%26%26vendorList)%7Bconst%20count%3DObject.keys(vendorList.vendors%7C%7C%7B%7D).length%3Bresults.push(%60%F0%9F%93%8C%20TCF%20(Quantcast)%20d%C3%A9tect%C3%A9%3A%20%24%7Bcount%7D%20partenaires%60)%3BshowResults()%3B%7D%7D)%3B%7Dconst%20textPatterns%3D%5B%2F(%5Cd%2B)%5Cs*partenaires%3F%2Fi%2C%2F(%5Cd%2B)%5Cs*vendors%3F%2Fi%2C%2F(%5Cd%2B)%5Cs*partners%3F%2Fi%5D%3Bconst%20bodyText%3Ddocument.body.innerText%3BtextPatterns.forEach(pattern%3D%3E%7Bconst%20match%3DbodyText.match(pattern)%3Bif(match)%7Bresults.push(%60%F0%9F%94%8D%20Trouv%C3%A9%20dans%20le%20texte%3A%20%24%7Bmatch%5B1%5D%7D%20partenaires%60)%3B%7D%7D)%3Bfunction%20showResults()%7Bif(results.length%3D%3D%3D0)%7Bresults.push('%E2%9A%A0%EF%B8%8F%20Aucun%20bandeau%20de%20cookies%20d%C3%A9tect%C3%A9')%3B%7Dconst%20message%3D%60%F0%9F%93%8A%20R%C3%A9sultats%20pour%20%24%7Bwindow.location.hostname%7D%3A%5Cn%5Cn%24%7Bresults.join('%5Cn')%7D%60%3Balert(message)%3Bconsole.log(message)%3B%7DsetTimeout(showResults%2C1000)%3B%7DcountCookiePartners()%3B%7D)()%3B" class="bookmarklet-link">
+            🔍 Compter les Partenaires Cookies
+        </a>
+    </div>
+
+    <div class="result-box">
+        <h2>✅ Ce que fait le bookmarklet</h2>
+        <ul>
+            <li>Détecte automatiquement la plateforme de consentement (Didomi, OneTrust, Quantcast/TCF)</li>
+            <li>Compte le nombre de partenaires publicitaires</li>
+            <li>Affiche le résultat dans une alerte</li>
+            <li>Enregistre aussi le résultat dans la console du navigateur</li>
+        </ul>
+    </div>
+
+    <h2>📝 Code source du bookmarklet</h2>
+    <p>Pour les curieux, voici le code JavaScript non-minifié :</p>
+    <div class="code">
+<pre>function countCookiePartners() {
+    let results = [];
+
+    // Détecter Didomi
+    if (window.Didomi) {
+        try {
+            const vendors = window.Didomi.getUserConsentStatusForAll()?.vendors || {};
+            const count = Object.keys(vendors).length;
+            results.push(`📌 Didomi détecté: ${count} partenaires`);
+        } catch(e) {
+            results.push('Erreur Didomi: ' + e.message);
+        }
+    }
+
+    // Détecter OneTrust
+    if (window.OneTrust) {
+        try {
+            const vendors = window.OneTrust.GetDomainData()?.VendorsSummary || [];
+            results.push(`📌 OneTrust détecté: ${vendors.length} partenaires`);
+        } catch(e) {
+            results.push('Erreur OneTrust: ' + e.message);
+        }
+    }
+
+    // Détecter TCF (Quantcast, etc.)
+    if (typeof __tcfapi === 'function') {
+        __tcfapi('getVendorList', 2, (vendorList, success) => {
+            if (success && vendorList) {
+                const count = Object.keys(vendorList.vendors || {}).length;
+                results.push(`📌 TCF (Quantcast) détecté: ${count} partenaires`);
+                showResults();
+            }
+        });
+    }
+
+    // Recherche dans le texte de la page
+    const textPatterns = [
+        /(\d+)\s*partenaires?/i,
+        /(\d+)\s*vendors?/i,
+        /(\d+)\s*partners?/i
+    ];
+
+    const bodyText = document.body.innerText;
+    textPatterns.forEach(pattern => {
+        const match = bodyText.match(pattern);
+        if (match) {
+            results.push(`🔍 Trouvé dans le texte: ${match[1]} partenaires`);
+        }
+    });
+
+    function showResults() {
+        if (results.length === 0) {
+            results.push('⚠️ Aucun bandeau de cookies détecté');
+        }
+
+        const message = `📊 Résultats pour ${window.location.hostname}:\n\n${results.join('\n')}`;
+        alert(message);
+        console.log(message);
+    }
+
+    setTimeout(showResults, 1000);
+}
+
+countCookiePartners();</pre>
+    </div>
+
+    <h2>🌐 Sites testés</h2>
+    <ul>
+        <li><strong>igen.fr</strong> - Didomi - ~94 partenaires</li>
+        <li><strong>lemonde.fr</strong> - OneTrust - ~300 partenaires</li>
+        <li><strong>20minutes.fr</strong> - Didomi - ~200 partenaires</li>
+    </ul>
+
+    <h2>❓ FAQ</h2>
+
+    <h3>Le bookmarklet ne fonctionne pas</h3>
+    <p>Assurez-vous que :</p>
+    <ul>
+        <li>Le bandeau de cookies est visible sur la page</li>
+        <li>Vous avez bien installé le bookmarklet dans vos favoris</li>
+        <li>Les pop-ups ne sont pas bloqués</li>
+    </ul>
+
+    <h3>Pourquoi certains sites affichent 0 partenaires ?</h3>
+    <p>Certains sites n'utilisent pas de plateforme de consentement standard, ou chargent les informations de manière différente.</p>
+
+    <h3>C'est sûr ?</h3>
+    <p>Oui, le code est visible ci-dessus et ne fait qu'analyser la page actuelle. Aucune donnée n'est envoyée à l'extérieur.</p>
+</body>
+</html>
